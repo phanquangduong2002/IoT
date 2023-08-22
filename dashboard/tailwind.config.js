@@ -10,9 +10,6 @@ module.exports = {
           "linear-gradient(106deg, #ffe1bc 29.63%, #ffcfd1 51.55%, #f3c6f1 90.85%)",
         "dark-mode":
           "radial-gradient( circle farthest-corner at 83.7% 4.3%,  rgba(173,0,171,1) 0%, rgba(15,51,92,1) 90% )",
-        "light-bg":
-          "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
-        "temperature-bg": "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
       },
       colors: {
         yellow: "linear-gradient(180deg, #F8D49A -146.42%, #FAD79D -46.42%)",
