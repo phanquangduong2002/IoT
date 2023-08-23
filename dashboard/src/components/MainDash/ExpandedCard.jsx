@@ -42,7 +42,7 @@ const ExpandedCard = ({ data, setData, expanded, setExpanded }) => {
       },
       tooltip: {
         x: {
-          format: "dd/MM/yyyy HH:mm",
+          format: "dd/MM/yyyy HH:mm:ss",
         },
       },
       grid: {
@@ -50,20 +50,10 @@ const ExpandedCard = ({ data, setData, expanded, setExpanded }) => {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2023-08-19T00:00:00.000Z",
-          "2023-08-19T01:30:00.000Z",
-          "2023-08-19T02:30:00.000Z",
-          "2023-08-19T03:30:00.000Z",
-          "2023-08-19T04:30:00.000Z",
-          "2023-08-19T05:30:00.000Z",
-          "2023-08-19T06:30:00.000Z",
-          "2023-08-19T07:30:00.000Z",
-          "2023-08-19T08:30:00.000Z",
-          "2023-08-19T09:30:00.000Z",
-        ],
+        categories: series[0].categories,
       },
     },
+    series: series,
   };
 
   const handleModal = (e) => {
@@ -97,7 +87,7 @@ const ExpandedCard = ({ data, setData, expanded, setExpanded }) => {
         <div>
           <Chart
             options={chartData.options}
-            series={series}
+            series={chartData.series}
             type="area"
             height={340}
           />

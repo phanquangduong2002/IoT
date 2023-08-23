@@ -1,6 +1,8 @@
 import React from "react";
 import { UseSelector, useSelector } from "react-redux";
 
+import { useLocation } from "react-router-dom";
+
 import Header from "../../components/Header/Header";
 
 const Analytics = () => {

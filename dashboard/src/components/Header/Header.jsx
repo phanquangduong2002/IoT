@@ -5,7 +5,7 @@ import { changeDarkMode } from "../../redux/themeStore";
 
 import { SearchIcon } from "../../assets/icons";
 
-const Header = () => {
+const Header = ({ location = "/" }) => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
   const dispatch = useDispatch();
@@ -14,8 +14,16 @@ const Header = () => {
     dispatch(changeDarkMode());
   };
   return (
-    <div className="flex items-center justify-between mb-4 pl-2">
-      <div className="form-control relative">
+    <div
+      className={`flex items-center mb-4 pl-2 ${
+        location.includes("profile") ? "justify-end" : "justify-between"
+      }`}
+    >
+      <div
+        className={`form-control relative ${
+          location.includes("profile") ? "hidden" : "block"
+        }`}
+      >
         <input
           type="text"
           placeholder="Nhập từ khóa tìm kiếm..."
