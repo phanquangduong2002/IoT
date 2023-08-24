@@ -64,7 +64,7 @@ const ExpandedCard = ({ data, setData, expanded, setExpanded }) => {
 
   return (
     <div
-      className="container fixed w-[100vw] h-[100vh] top-0 left-0 right-0 bottom-0"
+      className="container fixed w-[100vw] h-[100vh] top-0 left-0 right-0 bottom-0 z-[9999]"
       onClick={handleModal}
     >
       <motion.div
