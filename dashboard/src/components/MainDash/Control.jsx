@@ -87,7 +87,7 @@ const Control = () => {
             </div>
             {isB1On ? <BulbOnIcon /> : <BulbOffIcon />}
           </div>
-          <div className="flex items-center">
+          <div className="flex items-end">
             <div className="flex flex-col items-center justify-center mr-8">
               <span
                 className={`mb-2 uppercase text-xl font-semibold tracking-wider ${
