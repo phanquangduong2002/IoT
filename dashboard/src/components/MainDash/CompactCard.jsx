@@ -2,7 +2,9 @@ import React from "react";
 
 import { motion } from "framer-motion";
 
-const CompactCard = ({ data, setData, expanded, setExpanded }) => {
+import { SunIcon, TemperatureIcon, HumidityIcon } from "../../assets/icons";
+
+const CompactCard = ({ data, expanded, setExpanded }) => {
   const { title, icon, color, value, location, series } = data;
 
   const handleModal = () => {
@@ -24,7 +26,15 @@ const CompactCard = ({ data, setData, expanded, setExpanded }) => {
           <strong className="text-[40px] mb-3 text-white">{value}</strong>
           <span className="text-sm text-white">{location}</span>
         </div>
-        <div>{icon}</div>
+        <div>
+          {data?.id == 1 ? (
+            <TemperatureIcon />
+          ) : data?.id == 2 ? (
+            <HumidityIcon />
+          ) : (
+            <SunIcon />
+          )}
+        </div>
       </div>
     </motion.div>
   );

@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-
 import themeStore from "./themeStore";
+import dataStore from "./dataStore";
 
 import {
   persistStore,
@@ -20,7 +20,7 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({ theme: themeStore });
+const rootReducer = combineReducers({ theme: themeStore, data: dataStore });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

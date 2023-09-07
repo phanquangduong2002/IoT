@@ -31,7 +31,6 @@ export const Menu = [
 export const temperatureData = {
   id: 1,
   title: "Nhiệt độ",
-  icon: <TemperatureIcon />,
   color: {
     backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
     boxShadow: "0px 4px 8px 0px #FDC0C7",
@@ -50,7 +49,6 @@ export const temperatureData = {
 export const humidityData = {
   id: 2,
   title: "Độ ẩm",
-  icon: <HumidityIcon />,
   color: {
     backGround: "linear-gradient(180deg, #58c9cf 0%, #5fcbd1 100%)",
     boxShadow: "0px 4px 8px 0px #a0f0f6",
@@ -69,7 +67,6 @@ export const humidityData = {
 export const lightData = {
   id: 3,
   title: "Ánh sáng",
-  icon: <SunIcon />,
   color: {
     backGround:
       "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",

@@ -1,45 +1,32 @@
 import React, { useState, useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AnimateSharedLayout } from "framer-motion";
-
-import { humidityData } from "../../assets";
 
 import ExpandedCard from "./ExpandedCard";
 import CompactCard from "./CompactCard";
 
 import { format } from "date-fns-tz";
 
+import { randomValue } from "../../utils/createData";
+import { updateData } from "../../redux/dataStore";
+
 const Humidity = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
+  const { humidityData } = useSelector((state) => state.data);
+
   const [expanded, setExpanded] = useState(false);
-  const [data, setData] = useState(humidityData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const randomValue = Math.floor(Math.random() * 100);
-      const currentDateTime = new Date();
-      const vietnamTime = format(
-        currentDateTime,
-        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-        {
-          timeZone: "Asia/Ho_Chi_Minh",
-        }
+      const { value, vietnamTime } = randomValue();
+      dispatch(
+        updateData({ type: "humidity", randomValue: value, vietnamTime })
       );
-
-      setData((prevData) => ({
-        ...prevData,
-        value: randomValue + "°C",
-        series: [
-          {
-            name: prevData.series[0].name,
-            data: [...prevData.series[0].data, randomValue],
-            categories: [...prevData.series[0].categories, vietnamTime],
-          },
-        ],
-      }));
     }, 5000);
 
     return () => clearInterval(interval);
@@ -50,15 +37,13 @@ const Humidity = () => {
       <AnimateSharedLayout>
         {expanded ? (
           <ExpandedCard
-            data={data}
-            setData={setData}
+            data={humidityData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
         ) : (
           <CompactCard
-            data={data}
-            setData={setData}
+            data={humidityData}
             expanded={expanded}
             setExpanded={setExpanded}
           />

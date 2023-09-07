@@ -8,7 +8,7 @@ import Chart from "react-apexcharts";
 
 import { CloseIcon } from "../../assets/icons";
 
-const ExpandedCard = ({ data, setData, expanded, setExpanded }) => {
+const ExpandedCard = ({ data, expanded, setExpanded }) => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
   const { title, icon, color, value, location, series } = data;

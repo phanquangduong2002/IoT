@@ -1,45 +1,30 @@
 import React, { useState, useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AnimateSharedLayout } from "framer-motion";
-
-import { lightData } from "../../assets";
 
 import ExpandedCard from "./ExpandedCard";
 import CompactCard from "./CompactCard";
 
 import { format } from "date-fns-tz";
 
+import { randomValue } from "../../utils/createData";
+import { updateData } from "../../redux/dataStore";
+
 const Light = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
+  const { lightData } = useSelector((state) => state.data);
+
   const [expanded, setExpanded] = useState(false);
-  const [data, setData] = useState(lightData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const randomValue = Math.floor(Math.random() * 100);
-      const currentDateTime = new Date();
-      const vietnamTime = format(
-        currentDateTime,
-        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-        {
-          timeZone: "Asia/Ho_Chi_Minh",
-        }
-      );
-
-      setData((prevData) => ({
-        ...prevData,
-        value: randomValue + "°C",
-        series: [
-          {
-            name: prevData.series[0].name,
-            data: [...prevData.series[0].data, randomValue],
-            categories: [...prevData.series[0].categories, vietnamTime],
-          },
-        ],
-      }));
+      const { value, vietnamTime } = randomValue();
+      dispatch(updateData({ type: "light", randomValue: value, vietnamTime }));
     }, 5000);
 
     return () => clearInterval(interval);
@@ -50,15 +35,13 @@ const Light = () => {
       <AnimateSharedLayout>
         {expanded ? (
           <ExpandedCard
-            data={data}
-            setData={setData}
+            data={lightData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
         ) : (
           <CompactCard
-            data={data}
-            setData={setData}
+            data={lightData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
