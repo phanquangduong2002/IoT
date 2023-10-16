@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { temperatureData, humidityData, lightData } from "../assets";
+import {
+  temperatureData,
+  humidityData,
+  lightData,
+  controlData,
+} from "../assets";
 
 const initialState = {
   lightData: lightData,
   humidityData: humidityData,
   temperatureData: temperatureData,
+  controlData: controlData,
 };
 
 export const dataStore = createSlice({
@@ -18,8 +24,7 @@ export const dataStore = createSlice({
         case "light":
           state.lightData = {
             ...state.lightData,
-            value:
-              type === "temperature" ? randomValue + "°C" : randomValue + "%",
+            value: randomValue + " lux",
             series: [
               {
                 ...state.lightData.series[0],
@@ -35,8 +40,7 @@ export const dataStore = createSlice({
         case "humidity":
           state.humidityData = {
             ...state.humidityData,
-            value:
-              type === "temperature" ? randomValue + "°C" : randomValue + "%",
+            value: randomValue + "%",
             series: [
               {
                 ...state.humidityData.series[0],
@@ -52,8 +56,7 @@ export const dataStore = createSlice({
         case "temperature":
           state.temperatureData = {
             ...state.temperatureData,
-            value:
-              type === "temperature" ? randomValue + "°C" : randomValue + "%",
+            value: randomValue + "°C",
             series: [
               {
                 ...state.temperatureData.series[0],
@@ -70,9 +73,63 @@ export const dataStore = createSlice({
           break;
       }
     },
+    updateDataControl: (state, action) => {
+      state.controlData.categories = [
+        ...state.controlData.categories,
+        action.payload.vietNamTime,
+      ];
+      state.controlData.lightOne = [
+        ...state.controlData.lightOne,
+        action.payload.lightOne,
+      ];
+      state.controlData.lightTwo = [
+        ...state.controlData.lightTwo,
+        action.payload.lightTwo,
+      ];
+    },
+    clearData: (state) => {
+      state.lightData = {
+        ...state.lightData,
+        value: "0 lux",
+        series: [
+          {
+            ...state.lightData.series[0],
+            data: [],
+            categories: [],
+          },
+        ],
+      };
+      state.humidityData = {
+        ...state.humidityData,
+        value: "0%",
+        series: [
+          {
+            ...state.humidityData.series[0],
+            data: [],
+            categories: [],
+          },
+        ],
+      };
+      state.temperatureData = {
+        ...state.temperatureData,
+        value: "0°C",
+        series: [
+          {
+            ...state.temperatureData.series[0],
+            data: [],
+            categories: [],
+          },
+        ],
+      };
+      state.controlData = {
+        categories: [],
+        lightOne: [],
+        lightTwo: [],
+      };
+    },
   },
 });
 
-export const { updateData } = dataStore.actions;
+export const { updateData, updateDataControl, clearData } = dataStore.actions;
 
 export default dataStore.reducer;

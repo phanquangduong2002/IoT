@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateData } from "./redux/dataStore";
+
+import { useEffect } from "react";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Profile from "./pages/Profile/Profile";
@@ -8,6 +11,8 @@ import Analytics from "./pages/Analytics/Analytics";
 import Error from "./pages/Error/Error";
 
 import Sidebar from "./components/Sidebar/Sidebar";
+
+import { randomValue } from "./utils/createData";
 
 const Layout = () => {
   return (
@@ -42,6 +47,34 @@ const router = createBrowserRouter([
 
 function App() {
   const { isDarkMode } = useSelector((state) => state.theme);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { temperatureValue, humidityValue, lightValue, vietnamTime } =
+        randomValue();
+      dispatch(
+        updateData({ type: "light", randomValue: lightValue, vietnamTime })
+      );
+      dispatch(
+        updateData({
+          type: "temperature",
+          randomValue: temperatureValue,
+          vietnamTime,
+        })
+      );
+      dispatch(
+        updateData({
+          type: "humidity",
+          randomValue: humidityValue,
+          vietnamTime,
+        })
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div

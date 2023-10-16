@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useSelector } from "react-redux";
+
+import { motion } from "framer-motion";
+
 import Chart from "react-apexcharts";
 
-const ChartContainer = () => {
-  const data = {
+const ChartContainer = ({ data }) => {
+  const { isDarkMode } = useSelector((state) => state.theme);
+
+  const { title, icon, color, value, location, series } = data;
+
+  const chartData = {
     options: {
       chart: {
         type: "area",
-        height: "auto",
       },
 
       dropShadow: {
@@ -32,7 +40,7 @@ const ChartContainer = () => {
       },
       tooltip: {
         x: {
-          format: "dd/MM/yy HH:mm",
+          format: "dd/MM/yyyy HH:mm:ss",
         },
       },
       grid: {
@@ -40,34 +48,32 @@ const ChartContainer = () => {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z",
-          "2018-09-19T07:30:00.000Z",
-        ],
+        categories: series[0].categories,
       },
     },
-    series: [
-      {
-        name: "Chart",
-        data: [30, 40, 45, 70, 50, 25, 40, 15],
-      },
-    ],
+    series: series,
   };
   return (
-    <div className="text-black">
-      <Chart
-        options={data.options}
-        series={data.series}
-        type="area"
-        width="100%"
-        height="300"
-      />
+    <div className="container">
+      <motion.div
+        className="rounded-xl cursor-pointer text-black p-6"
+        style={{
+          background: color.backGround,
+          boxShadow: color.boxShadow,
+        }}
+      >
+        <span className="uppercase text-white text-xl font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+          {title}
+        </span>
+        <div>
+          <Chart
+            options={chartData.options}
+            series={chartData.series}
+            type="area"
+            height={340}
+          />
+        </div>
+      </motion.div>
     </div>
   );
 };

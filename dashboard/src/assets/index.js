@@ -72,7 +72,7 @@ export const lightData = {
       "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
     boxShadow: "0px 4px 8px 0px #F9D59B",
   },
-  value: "0%",
+  value: "0 lux",
   location: "Hà Nội, Việt Nam",
   series: [
     {
@@ -81,4 +81,10 @@ export const lightData = {
       categories: [],
     },
   ],
+};
+
+export const controlData = {
+  categories: [],
+  lightOne: [],
+  lightTwo: [],
 };

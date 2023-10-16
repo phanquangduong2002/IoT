@@ -39,9 +39,7 @@ const Profile = () => {
               </h3>
               <div className="py-5 flex items-center justify-center lg:justify-start gap-7 lg:gap-10">
                 <button
-                  className={`rounded-full border-[2px] border-red-500 bg-red-500 text-white px-4 py-2 cursor-pointer text-lg hover:bg-transparent hover:${
-                    isDarkMode ? "text-white" : "text-black"
-                  } transition-all duration-[200ms] ease-in-out`}
+                  className={`rounded-full border-[2px] border-red-500 bg-red-500 text-white px-4 py-2 cursor-pointer text-lg hover:bg-transparent hover:text-black transition-all duration-[200ms] ease-in-out`}
                 >
                   <a
                     className="block w-full h-full"
