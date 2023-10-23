@@ -7,10 +7,7 @@ import { AnimateSharedLayout } from "framer-motion";
 import ExpandedCard from "./ExpandedCard";
 import CompactCard from "./CompactCard";
 
-import { format } from "date-fns-tz";
-
-import { randomValue } from "../../utils/createData";
-import { updateData } from "../../redux/dataStore";
+import { temp } from "../../assets";
 
 const Temperature = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
@@ -24,12 +21,14 @@ const Temperature = () => {
       <AnimateSharedLayout>
         {expanded ? (
           <ExpandedCard
+            constants={temp}
             data={temperatureData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
         ) : (
           <CompactCard
+            constants={temp}
             data={temperatureData}
             expanded={expanded}
             setExpanded={setExpanded}

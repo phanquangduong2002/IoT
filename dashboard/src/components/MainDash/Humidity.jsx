@@ -7,10 +7,7 @@ import { AnimateSharedLayout } from "framer-motion";
 import ExpandedCard from "./ExpandedCard";
 import CompactCard from "./CompactCard";
 
-import { format } from "date-fns-tz";
-
-import { randomValue } from "../../utils/createData";
-import { updateData } from "../../redux/dataStore";
+import { humi } from "../../assets";
 
 const Humidity = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
@@ -18,17 +15,20 @@ const Humidity = () => {
   const { humidityData } = useSelector((state) => state.data);
 
   const [expanded, setExpanded] = useState(false);
+
   return (
     <div className={`col-span-1 ${isDarkMode ? "text-white" : "text-black"}`}>
       <AnimateSharedLayout>
         {expanded ? (
           <ExpandedCard
+            constants={humi}
             data={humidityData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
         ) : (
           <CompactCard
+            constants={humi}
             data={humidityData}
             expanded={expanded}
             setExpanded={setExpanded}

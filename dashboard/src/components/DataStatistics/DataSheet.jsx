@@ -16,41 +16,41 @@ const DataSheet = () => {
       <div className="w-[40%]">
         <span>Thời gian</span>
         <div className="flex flex-col-reverse">
-          {temperatureData &&
+          {/* {temperatureData &&
             temperatureData?.series[0]?.categories.length > 0 &&
             temperatureData?.series[0]?.categories.map((item, index) => (
               <div key={index}>{formatDate(item)}</div>
-            ))}
+            ))} */}
         </div>
       </div>
       <div className="w-[20%] flex flex-col items-center justify-center">
         <span>Nhiệt độ</span>
         <div className="flex flex-col-reverse">
-          {temperatureData &&
+          {/* {temperatureData &&
             temperatureData?.series[0]?.data.length > 0 &&
             temperatureData?.series[0]?.data.map((item, index) => (
               <div key={index}>{item}</div>
-            ))}
+            ))} */}
         </div>
       </div>
       <div className="w-[20%] flex flex-col items-center justify-center">
         <span>Độ ẩm</span>
         <div className="flex flex-col-reverse">
-          {humidityData &&
+          {/* {humidityData &&
             humidityData?.series[0]?.data.length > 0 &&
             humidityData?.series[0]?.data.map((item, index) => (
               <div key={index}>{item}</div>
-            ))}
+            ))} */}
         </div>
       </div>
       <div className="w-[20%] flex flex-col items-center justify-center">
         <span>Ánh sáng</span>
         <div className="flex flex-col-reverse">
-          {lightData &&
+          {/* {lightData &&
             lightData?.series[0]?.data.length > 0 &&
             lightData?.series[0]?.data.map((item, index) => (
               <div key={index}>{item}</div>
-            ))}
+            ))} */}
         </div>
       </div>
     </div>

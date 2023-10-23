@@ -12,13 +12,4 @@ export const randomValue = () => {
   return { value, temperatureValue, humidityValue, lightValue, vietnamTime };
 };
 
-export const formatDate = (time) => {
-  const [datePart, timePart] = time.split("T");
-  const [year, month, day] = datePart.split("-");
-  const [hour, minute, second] = timePart.split(":");
-  const formattedDateTime = `${day}-${month}-${year} ${hour}:${minute}:${parseInt(
-    second,
-    10
-  )}`;
-  return formattedDateTime;
-};
+// const formattedDate = format(inputDate, "dd-MM-yyyy HH:mm:ss");

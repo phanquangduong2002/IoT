@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
   return (
-    <div className="col-span-10 my-6 pr-9">
+    <div className="h-[100vh] overflow-auto  col-span-10 my-6 pr-9">
       <div className={`${isDarkMode ? "text-white" : "text-black"}`}>
         <Header />
         <MainDash />

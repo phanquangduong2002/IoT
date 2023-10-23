@@ -8,10 +8,12 @@ import Chart from "react-apexcharts";
 
 import { CloseIcon } from "../../assets/icons";
 
-const ExpandedCard = ({ data, expanded, setExpanded }) => {
+const ExpandedCard = ({ constants, data, expanded, setExpanded }) => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
-  const { title, icon, color, value, location, series } = data;
+  const { id, title, color, location } = constants;
+
+  console.log(title, data);
 
   const chartData = {
     options: {
@@ -42,7 +44,7 @@ const ExpandedCard = ({ data, expanded, setExpanded }) => {
       },
       tooltip: {
         x: {
-          format: "dd/MM/yyyy HH:mm:ss",
+          format: "dd-MM-yyyy HH:mm:ss",
         },
       },
       grid: {
@@ -50,10 +52,10 @@ const ExpandedCard = ({ data, expanded, setExpanded }) => {
       },
       xaxis: {
         type: "datetime",
-        categories: series[0].categories,
+        categories: data.time,
       },
     },
-    series: series,
+    series: [{ name: title, data: data.data, caches: data.time }],
   };
 
   const handleModal = (e) => {

@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateData } from "./redux/dataStore";
 
 import { useEffect } from "react";
+import io from "socket.io-client";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Profile from "./pages/Profile/Profile";
@@ -12,7 +12,7 @@ import Error from "./pages/Error/Error";
 
 import Sidebar from "./components/Sidebar/Sidebar";
 
-import { randomValue } from "./utils/createData";
+import { updateData } from "./redux/dataStore";
 
 const Layout = () => {
   return (
@@ -51,29 +51,46 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const { temperatureValue, humidityValue, lightValue, vietnamTime } =
-        randomValue();
-      dispatch(
-        updateData({ type: "light", randomValue: lightValue, vietnamTime })
-      );
-      dispatch(
-        updateData({
-          type: "temperature",
-          randomValue: temperatureValue,
-          vietnamTime,
-        })
-      );
-      dispatch(
-        updateData({
-          type: "humidity",
-          randomValue: humidityValue,
-          vietnamTime,
-        })
-      );
-    }, 5000);
+    const socket = io("http://localhost:8000");
 
-    return () => clearInterval(interval);
+    socket.on("connect", () => {
+      console.log("Connected to the server.");
+    });
+
+    socket.on("full-data", (data) => {
+      const temperatureData = { time: [], data: [] };
+      const humidityData = { time: [], data: [] };
+      const lightData = { time: [], data: [] };
+
+      data.forEach((item) => {
+        const time = item.time;
+        const temperature = item.temp;
+        const humidity = item.humi;
+        const light = item.light;
+
+        temperatureData.time.push(time);
+        temperatureData.data.push(temperature);
+
+        humidityData.time.push(time);
+        humidityData.data.push(humidity);
+
+        lightData.time.push(time);
+        lightData.data.push(light);
+      });
+
+      dispatch(updateData({ type: "light", data: lightData }));
+      dispatch(updateData({ type: "humi", data: humidityData }));
+      dispatch(updateData({ type: "temp", data: temperatureData }));
+      dispatch(updateData({ type: "data", data: data }));
+    });
+
+    socket.on("data", (data) => {
+      console.log(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (

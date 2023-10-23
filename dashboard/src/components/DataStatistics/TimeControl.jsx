@@ -11,31 +11,31 @@ const TimeControl = () => {
       <div className="flex-1">
         <span>Thời gian</span>
         <div className="flex flex-col-reverse">
-          {controlData &&
+          {/* {controlData &&
             controlData?.categories.length > 0 &&
             controlData?.categories.map((item, index) => (
               <div key={index}>{formatDate(item)}</div>
-            ))}
+            ))} */}
         </div>
       </div>
       <div className="flex-1 flex flex-col items-center justify-center">
         <span>Đèn 1</span>
         <div className="flex flex-col-reverse">
-          {controlData &&
+          {/* {controlData &&
             controlData?.lightOne.length > 0 &&
             controlData?.lightOne.map((item, index) => (
               <div key={index}>{item}</div>
-            ))}
+            ))} */}
         </div>
       </div>
       <div className="flex-1 flex flex-col items-center justify-center">
         <span>Đèn 2</span>
         <div className="flex flex-col-reverse">
-          {controlData &&
+          {/* {controlData &&
             controlData?.lightTwo.length > 0 &&
             controlData?.lightTwo.map((item, index) => (
               <div key={index}>{item}</div>
-            ))}
+            ))} */}
         </div>
       </div>
     </div>

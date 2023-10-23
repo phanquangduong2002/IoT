@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { clearData } from "../../redux/dataStore";
-
 import DataSheet from "./DataSheet";
 import TimeControl from "./TimeControl";
 
@@ -43,7 +41,6 @@ const DataStatistics = () => {
     toast(notifyMsg, { type: state, theme: "colored" });
 
   const clear = () => {
-    dispatch(clearData());
     notify(`Xóa dữ liệu thành công`, "success");
   };
 

@@ -7,10 +7,7 @@ import { AnimateSharedLayout } from "framer-motion";
 import ExpandedCard from "./ExpandedCard";
 import CompactCard from "./CompactCard";
 
-import { format } from "date-fns-tz";
-
-import { randomValue } from "../../utils/createData";
-import { updateData } from "../../redux/dataStore";
+import { light } from "../../assets";
 
 const Light = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
@@ -24,12 +21,14 @@ const Light = () => {
       <AnimateSharedLayout>
         {expanded ? (
           <ExpandedCard
+            constants={light}
             data={lightData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
         ) : (
           <CompactCard
+            constants={light}
             data={lightData}
             expanded={expanded}
             setExpanded={setExpanded}

@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 
 import Chart from "react-apexcharts";
 
-const ChartContainer = ({ data }) => {
+const ChartContainer = ({ constants, data }) => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
-  const { title, icon, color, value, location, series } = data;
+  const { id, title, color, location } = constants;
 
   const chartData = {
     options: {
@@ -48,11 +48,12 @@ const ChartContainer = ({ data }) => {
       },
       xaxis: {
         type: "datetime",
-        categories: series[0].categories,
+        categories: [],
       },
     },
-    series: series,
+    series: [{}],
   };
+
   return (
     <div className="container">
       <motion.div

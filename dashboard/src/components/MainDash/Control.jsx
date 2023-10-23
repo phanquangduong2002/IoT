@@ -13,7 +13,7 @@ import { BulbOnIcon, BulbOffIcon } from "../../assets/icons";
 
 import ChartContainer from "./ChartContainer";
 
-import { updateDataControl } from "../../redux/dataStore";
+import { temp, humi, light } from "../../assets";
 
 const MyCustomToastContainer = () => {
   return (
@@ -68,25 +68,9 @@ const Control = () => {
     const id = e.target.id;
     const timeVietNam = getTime();
     if (id == 1) {
-      dispatch(
-        updateDataControl({
-          vietNamTime: timeVietNam,
-          lightOne: "ON",
-          lightTwo:
-            controlData?.lightTwo[controlData?.lightTwo.length - 1] || "OFF",
-        })
-      );
       setIsB1On(true);
     }
     if (id == 2) {
-      dispatch(
-        updateDataControl({
-          vietNamTime: timeVietNam,
-          lightOne:
-            controlData?.lightOne[controlData?.lightOne.length - 1] || "OFF",
-          lightTwo: "ON",
-        })
-      );
       setIsB2On(true);
     }
     notify(`Đèn ${id} đã bật`, "success");
@@ -96,25 +80,9 @@ const Control = () => {
     const id = e.target.id;
     const timeVietNam = getTime();
     if (id == 1) {
-      dispatch(
-        updateDataControl({
-          vietNamTime: timeVietNam,
-          lightOne: "OFF",
-          lightTwo:
-            controlData?.lightTwo[controlData?.lightTwo.length - 1] || "OFF",
-        })
-      );
       setIsB1On(false);
     }
     if (id == 2) {
-      dispatch(
-        updateDataControl({
-          vietNamTime: timeVietNam,
-          lightOne:
-            controlData?.lightOne[controlData?.lightOne.length - 1] || "OFF",
-          lightTwo: "OFF",
-        })
-      );
       setIsB2On(false);
     }
     notify(`Đèn ${id} đã tắt`, "warning");
@@ -171,11 +139,11 @@ const Control = () => {
       <div className="grid grid-cols-4 gap-12 items-start justify-between">
         <div className="col-span-3">
           {id && id === 1 ? (
-            <ChartContainer data={temperatureData} />
+            <ChartContainer constants={temp} data={temperatureData} />
           ) : id === 2 ? (
-            <ChartContainer data={humidityData} />
+            <ChartContainer constants={humi} data={humidityData} />
           ) : (
-            <ChartContainer data={lightData} />
+            <ChartContainer constants={light} data={lightData} />
           )}
         </div>
         <div className="pt-5 col-span-1 flex flex-col items-center justify-center gap-14">
@@ -192,21 +160,13 @@ const Control = () => {
               </span>
               <input
                 type="checkbox"
-                checked={
-                  controlData?.lightOne[controlData?.lightOne.length - 1] ===
-                  "ON"
-                }
                 id="1"
                 className="toggle toggle-warning toggle-lg"
                 onClick={handleClickLamp}
               />
             </div>
-            {controlData?.lightOne[controlData?.lightOne.length - 1] ===
-            "ON" ? (
-              <BulbOnIcon />
-            ) : (
-              <BulbOffIcon />
-            )}
+
+            <BulbOnIcon />
           </div>
           <div className="flex items-end">
             <div className="flex flex-col items-center justify-center mr-8">
@@ -222,20 +182,11 @@ const Control = () => {
               <input
                 type="checkbox"
                 id="2"
-                checked={
-                  controlData?.lightTwo[controlData?.lightTwo.length - 1] ===
-                  "ON"
-                }
                 className="toggle toggle-warning toggle-lg"
                 onClick={handleClickLamp}
               />
             </div>
-            {controlData?.lightTwo[controlData?.lightTwo.length - 1] ===
-            "ON" ? (
-              <BulbOnIcon />
-            ) : (
-              <BulbOffIcon />
-            )}
+            <BulbOnIcon />
           </div>
         </div>
       </div>
