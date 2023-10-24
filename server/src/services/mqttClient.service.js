@@ -9,6 +9,7 @@ const updateData = (connection, client, io) => {
       const Temperature = data.temperature;
       const Humidity = data.humidity;
       const Light = data.light;
+      const Gas = data.gas;
 
       const currentTime = new Date();
       var month = currentTime.getMonth() + 1;
@@ -26,15 +27,15 @@ const updateData = (connection, client, io) => {
         currentTime.getSeconds();
 
       console.log(
-        `Time: ${Date_and_Time}, Temperature: ${Temperature} °C, Humidity: ${Humidity} %, Light: ${Light} lux`
+        `Time: ${Date_and_Time}, Temperature: ${Temperature} °C, Humidity: ${Humidity} %, Light: ${Light} lux, Gas: ${Gas} CO2`
       );
 
       const sql =
-        "INSERT INTO sensor_data (Time, Temperature, Humidity, Light) VALUES (?, ?, ?, ?)";
+        "INSERT INTO sensor_data (Time, Temperature, Humidity, Light, Gas) VALUES (?, ?, ?, ?, ?)";
 
       connection.query(
         sql,
-        [Date_and_Time, Temperature, Humidity, Light],
+        [Date_and_Time, Temperature, Humidity, Light, Gas],
         (error, results) => {
           if (error) throw error;
         }
@@ -49,6 +50,7 @@ const updateData = (connection, client, io) => {
           if (results.length > 0) {
             const latestData = results[0];
             io.emit("data", {
+              id: latestData.ID,
               time: format(
                 new Date(latestData.Time),
                 "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
@@ -59,6 +61,7 @@ const updateData = (connection, client, io) => {
               temp: latestData.Temperature,
               humi: latestData.Humidity,
               light: latestData.Light,
+              gas: latestData.Gas,
             });
           } else {
             console.log("Không tìm thấy dữ liệu.");

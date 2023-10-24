@@ -13,6 +13,7 @@ import Error from "./pages/Error/Error";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 import { updateData } from "./redux/dataStore";
+import { da } from "date-fns/locale";
 
 const Layout = () => {
   return (
@@ -61,12 +62,16 @@ function App() {
       const temperatureData = { time: [], data: [] };
       const humidityData = { time: [], data: [] };
       const lightData = { time: [], data: [] };
+      const gasData = { time: [], data: [] };
 
-      data.forEach((item) => {
+      const reversedData = data.reverse();
+
+      reversedData.forEach((item) => {
         const time = item.time;
         const temperature = item.temp;
         const humidity = item.humi;
         const light = item.light;
+        const gas = item.gas;
 
         temperatureData.time.push(time);
         temperatureData.data.push(temperature);
@@ -76,12 +81,16 @@ function App() {
 
         lightData.time.push(time);
         lightData.data.push(light);
+
+        gasData.time.push(time);
+        gasData.data.push(gas);
       });
 
       dispatch(updateData({ type: "light", data: lightData }));
       dispatch(updateData({ type: "humi", data: humidityData }));
       dispatch(updateData({ type: "temp", data: temperatureData }));
-      dispatch(updateData({ type: "data", data: data }));
+      dispatch(updateData({ type: "gas", data: gasData }));
+      dispatch(updateData({ type: "data", data: reversedData }));
     });
 
     socket.on("data", (data) => {
@@ -89,12 +98,14 @@ function App() {
       const temperatureData = { time: [], data: [] };
       const humidityData = { time: [], data: [] };
       const lightData = { time: [], data: [] };
+      const gasData = { time: [], data: [] };
 
       convertData.forEach((item) => {
         const time = item.time;
         const temperature = item.temp;
         const humidity = item.humi;
         const light = item.light;
+        const gas = item.gas;
 
         temperatureData.time.push(time);
         temperatureData.data.push(temperature);
@@ -104,11 +115,15 @@ function App() {
 
         lightData.time.push(time);
         lightData.data.push(light);
+
+        gasData.time.push(time);
+        gasData.data.push(gas);
       });
 
       dispatch(updateData({ type: "light", data: lightData }));
       dispatch(updateData({ type: "humi", data: humidityData }));
       dispatch(updateData({ type: "temp", data: temperatureData }));
+      dispatch(updateData({ type: "gas", data: gasData }));
       dispatch(updateData({ type: "data", data: convertData }));
     });
 

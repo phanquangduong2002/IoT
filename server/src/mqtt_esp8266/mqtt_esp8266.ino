@@ -110,10 +110,14 @@ void loop() {
       dtostrf(temperature, 5, 2, tempStr);
       dtostrf(humidity, 5, 2, humidityStr);
 
+      int gasValue = random(0, 100); 
+
       DynamicJsonDocument doc(1024);
       doc["temperature"] = tempStr; // Sử dụng chuỗi đã làm tròn
       doc["humidity"] = humidityStr; // Sử dụng chuỗi đã làm tròn
       doc["light"] = lightValue;
+      doc["gas"] = gasValue;
+
       String jsonStr;
       serializeJson(doc, jsonStr);
       client.publish(dataTopic, jsonStr.c_str());
@@ -123,7 +127,9 @@ void loop() {
       Serial.print(humidityStr);
       Serial.print(" %, Light: ");
       Serial.print(lightValue);
-      Serial.println(" lux");
+      Serial.print(" lux, Gas: ");
+      Serial.print(gasValue);
+      Serial.println(" CO2");
     }
   }
 

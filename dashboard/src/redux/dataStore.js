@@ -5,6 +5,7 @@ const initialState = {
   lightData: { time: [], data: [] },
   humidityData: { time: [], data: [] },
   temperatureData: { time: [], data: [] },
+  gasData: { time: [], data: [] },
   controlData: [],
 };
 
@@ -37,6 +38,10 @@ export const dataStore = createSlice({
             ...state.temperatureData.data,
             ...data.data,
           ];
+          break;
+        case "gas":
+          state.gasData.time = [...state.gasData.time, ...data.time];
+          state.gasData.data = [...state.gasData.data, ...data.data];
           break;
         default:
           break;

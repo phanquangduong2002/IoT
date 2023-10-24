@@ -52,7 +52,11 @@ const ChartContainer = ({ constants, data }) => {
       },
     },
     series: [
-      { name: title, data: data.data.slice(-15), caches: data.time.slice(-15) },
+      {
+        name: title,
+        data: data.data.slice(-15),
+        categories: data.time.slice(-15),
+      },
     ],
   };
 

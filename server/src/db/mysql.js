@@ -21,9 +21,12 @@ connection.connect((err) => {
     Time DATETIME NOT NULL,
     Temperature FLOAT NOT NULL,
     Humidity FLOAT NOT NULL,
-    Light INT NOT NULL
+    Light INT NOT NULL,
+    Gas INT NOT NULL
   );  
   `;
+
+  // Gas INT NOT NULL
 
   connection.query(createTableQuery, (error) => {
     if (error) {

@@ -60,26 +60,19 @@ export const light = {
   location: "Hà Nội, Việt Nam",
 };
 
+export const gas = {
+  id: 4,
+  title: "Khí gas",
+  color: {
+    backGround:
+      "linear-gradient(rgb(189 173 163) -146.42%, rgb(192 183 169) -46.42%)",
+    boxShadow: "0px 4px 8px 0px rgb(161 157 151)",
+  },
+  location: "Hà Nội, Việt Nam",
+};
+
 export const controlData = {
   categories: [],
   lightOne: [],
   lightTwo: [],
-};
-
-export const temperatureData = {
-  id: 1,
-  title: "Nhiệt độ",
-  color: {
-    backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
-    boxShadow: "0px 4px 8px 0px #FDC0C7",
-  },
-  value: "0°C",
-  location: "Hà Nội, Việt Nam",
-  series: [
-    {
-      name: "Nhiệt độ",
-      data: [],
-      categories: [],
-    },
-  ],
 };

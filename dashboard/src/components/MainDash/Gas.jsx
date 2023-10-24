@@ -7,12 +7,12 @@ import { AnimateSharedLayout } from "framer-motion";
 import ExpandedCard from "./ExpandedCard";
 import CompactCard from "./CompactCard";
 
-import { humi } from "../../assets";
+import { gas } from "../../assets";
 
-const Humidity = () => {
+const Gas = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
-  const { humidityData } = useSelector((state) => state.data);
+  const { gasData } = useSelector((state) => state.data);
 
   const [expanded, setExpanded] = useState(false);
 
@@ -21,15 +21,15 @@ const Humidity = () => {
       <AnimateSharedLayout>
         {expanded ? (
           <ExpandedCard
-            constants={humi}
-            data={humidityData}
+            constants={gas}
+            data={gasData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
         ) : (
           <CompactCard
-            constants={humi}
-            data={humidityData}
+            constants={gas}
+            data={gasData}
             expanded={expanded}
             setExpanded={setExpanded}
           />
@@ -39,4 +39,4 @@ const Humidity = () => {
   );
 };
 
-export default Humidity;
+export default Gas;

@@ -8,6 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//--------------------ROUTER-------------------------------------
+const router = require("./routes");
+
+app.use("/api", router);
+
 //--------------------CONNECT MYSQL-------------------------------------
 const connection = require("./db/mysql");
 

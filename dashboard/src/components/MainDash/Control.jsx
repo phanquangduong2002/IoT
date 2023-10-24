@@ -13,7 +13,7 @@ import { BulbOnIcon, BulbOffIcon } from "../../assets/icons";
 
 import ChartContainer from "./ChartContainer";
 
-import { temp, humi, light } from "../../assets";
+import { temp, humi, light, gas } from "../../assets";
 
 const MyCustomToastContainer = () => {
   return (
@@ -39,9 +39,8 @@ const MyCustomToastContainer = () => {
 
 const Control = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
-  const { temperatureData, humidityData, lightData, controlData } = useSelector(
-    (state) => state.data
-  );
+  const { temperatureData, humidityData, lightData, gasData, controlData } =
+    useSelector((state) => state.data);
 
   const [isB1On, setIsB1On] = useState(false);
   const [isB2On, setIsB2On] = useState(false);
@@ -95,7 +94,7 @@ const Control = () => {
   };
   return (
     <div className="my-8">
-      <div className="flex items-center justify-start gap-8 mb-6">
+      <div className="flex items-center justify-start gap-6 mb-6">
         <button
           onClick={() => setId(1)}
           className={`rounded-full border-[2px] border-red-500 px-[14px] py-1 cursor-pointer text-sm
@@ -135,6 +134,19 @@ const Control = () => {
         >
           Ánh sáng
         </button>
+        <button
+          onClick={() => setId(4)}
+          className={`rounded-full border-[2px] border-red-500 px-[14px] py-1 cursor-pointer text-sm
+        ${
+          id === 4
+            ? "bg-red-500 text-white"
+            : `${
+                !isDarkMode ? "text-black" : ""
+              } hover:bg-transparent hover:text-black`
+        } transition-all duration-[200ms] ease-in-out`}
+        >
+          Khí gas
+        </button>
       </div>
       <div className="grid grid-cols-4 gap-12 items-start justify-between">
         <div className="col-span-3">
@@ -142,8 +154,10 @@ const Control = () => {
             <ChartContainer constants={temp} data={temperatureData} />
           ) : id === 2 ? (
             <ChartContainer constants={humi} data={humidityData} />
-          ) : (
+          ) : id === 3 ? (
             <ChartContainer constants={light} data={lightData} />
+          ) : (
+            <ChartContainer constants={gas} data={gasData} />
           )}
         </div>
         <div className="pt-5 col-span-1 flex flex-col items-center justify-center gap-14">

@@ -17,7 +17,7 @@ const Light = () => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className={`col-span-1 ${isDarkMode ? "text-white" : "text-black"}`}>
+    <div className={`flex-1 ${isDarkMode ? "text-white" : "text-black"}`}>
       <AnimateSharedLayout>
         {expanded ? (
           <ExpandedCard
