@@ -52,10 +52,12 @@ const ExpandedCard = ({ constants, data, expanded, setExpanded }) => {
       },
       xaxis: {
         type: "datetime",
-        categories: data.time,
+        categories: data.time.slice(-15),
       },
     },
-    series: [{ name: title, data: data.data, caches: data.time }],
+    series: [
+      { name: title, data: data.data.slice(-15), caches: data.time.slice(-15) },
+    ],
   };
 
   const handleModal = (e) => {

@@ -49,7 +49,13 @@ const updateData = (connection, client, io) => {
           if (results.length > 0) {
             const latestData = results[0];
             io.emit("data", {
-              time: format(new Date(latestData.Time), "dd-MM-yyyy HH:mm:ss"),
+              time: format(
+                new Date(latestData.Time),
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                {
+                  timeZone: "Asia/Ho_Chi_Minh",
+                }
+              ),
               temp: latestData.Temperature,
               humi: latestData.Humidity,
               light: latestData.Light,

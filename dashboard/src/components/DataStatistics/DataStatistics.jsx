@@ -37,13 +37,6 @@ const DataStatistics = () => {
 
   const dispatch = useDispatch();
 
-  const notify = (notifyMsg, state) =>
-    toast(notifyMsg, { type: state, theme: "colored" });
-
-  const clear = () => {
-    notify(`Xóa dữ liệu thành công`, "success");
-  };
-
   return (
     <div className="my-6 ml-8">
       <div className="flex items-center justify-start gap-8 mb-6">
@@ -72,13 +65,6 @@ const DataStatistics = () => {
           }  transition-all duration-[200ms] ease-in-out`}
         >
           Điều khiển
-        </button>
-        <button
-          className={`ml-auto rounded-full border-[2px] border-red-500 bg-red-500 text-white px-3 py-1 cursor-pointer text-lg hover:bg-transparent hover:text-black
-        } transition-all duration-[200ms] ease-in-out`}
-          onClick={clear}
-        >
-          Clear data
         </button>
       </div>
       <div className="flex items-start justify-start gap-6">

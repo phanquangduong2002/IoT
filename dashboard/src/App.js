@@ -85,7 +85,31 @@ function App() {
     });
 
     socket.on("data", (data) => {
-      console.log(data);
+      const convertData = [data];
+      const temperatureData = { time: [], data: [] };
+      const humidityData = { time: [], data: [] };
+      const lightData = { time: [], data: [] };
+
+      convertData.forEach((item) => {
+        const time = item.time;
+        const temperature = item.temp;
+        const humidity = item.humi;
+        const light = item.light;
+
+        temperatureData.time.push(time);
+        temperatureData.data.push(temperature);
+
+        humidityData.time.push(time);
+        humidityData.data.push(humidity);
+
+        lightData.time.push(time);
+        lightData.data.push(light);
+      });
+
+      dispatch(updateData({ type: "light", data: lightData }));
+      dispatch(updateData({ type: "humi", data: humidityData }));
+      dispatch(updateData({ type: "temp", data: temperatureData }));
+      dispatch(updateData({ type: "data", data: convertData }));
     });
 
     return () => {
