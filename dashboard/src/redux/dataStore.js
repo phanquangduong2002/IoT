@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: [],
   lightData: { time: [], data: [] },
   humidityData: { time: [], data: [] },
   temperatureData: { time: [], data: [] },
   gasData: { time: [], data: [] },
-  controlData: [],
 };
 
 export const dataStore = createSlice({
@@ -16,11 +14,6 @@ export const dataStore = createSlice({
     updateData: (state, action) => {
       const { type, data } = action.payload;
       switch (type) {
-        case "data":
-          return {
-            ...state,
-            data: [...state.data, ...data],
-          };
         case "light":
           state.lightData.time = [...state.lightData.time, ...data.time];
           state.lightData.data = [...state.lightData.data, ...data.data];

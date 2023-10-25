@@ -27,13 +27,13 @@ const DataSheet = () => {
       setTotalPages(res.data.totalPages);
       setInterval(() => {
         setIsLoading(false);
-      }, 1500);
+      }, 1200);
     } catch (error) {
       console.log(error);
       setIsErr(true);
       setInterval(() => {
         setIsLoading(false);
-      }, 1500);
+      }, 1200);
     }
   };
 
@@ -45,18 +45,17 @@ const DataSheet = () => {
         const res = await axios.post(
           `http://localhost:8000/api/data?page=${page}`
         );
-        console.log(res.data);
         setData(res.data.data);
         setTotalPages(res.data.totalPages);
         setInterval(() => {
           setIsLoading(false);
-        }, 1500);
+        }, 1200);
       } catch (error) {
         console.log(error);
         setIsErr(true);
         setInterval(() => {
           setIsLoading(false);
-        }, 1500);
+        }, 1200);
       }
     };
 
@@ -86,18 +85,18 @@ const DataSheet = () => {
         </div>
       </div>
 
-      <div className="w-full max-h-[60vh] overflow-y-auto">
-        <div className="w-full min-h-[50vh] flex flex-col items-start justify-start">
+      <div className="w-full">
+        <div className="w-full min-h-[54vh] flex flex-col items-start justify-start">
           {isErr ? (
-            <div className="w-full mt-6 flex items-center justify-center">
+            <div className="w-full mt-16 flex items-center justify-center">
               Không tìm thấy dữ liệu
             </div>
           ) : isLoading ? (
-            <div className="w-full min-h-[50vh] flex item-center justify-center">
+            <div className="w-full min-h-[54vh] flex item-center justify-center">
               <span className="loading loading-spinner text-secondary"></span>
             </div>
           ) : data && data.length == 0 ? (
-            <div className="w-full mt-6 flex items-center justify-center">
+            <div className="w-full mt-16 flex items-center justify-center">
               Không tìm thấy dữ liệu
             </div>
           ) : (
@@ -106,22 +105,22 @@ const DataSheet = () => {
             data.map((item, index) => (
               <div key={index} className="w-full flex gap-4 items-start">
                 <div className="w-[8%]">
-                  <span>{item.ID}</span>
+                  <span>{item.id}</span>
                 </div>
                 <div className="w-[36%]">
-                  <span>{convertToCustomFormat(item.Time)}</span>
+                  <span>{convertToCustomFormat(item.time)}</span>
                 </div>
                 <div className="w-[20%] flex items-center justify-center">
-                  <span>{item.Temperature}</span>
+                  <span>{item.temp}</span>
                 </div>
                 <div className="w-[20%] flex items-center justify-center">
-                  <span>{item.Humidity}</span>
+                  <span>{item.humi}</span>
                 </div>
                 <div className="w-[20%] flex items-center justify-center">
-                  <span>{item.Light}</span>
+                  <span>{item.light}</span>
                 </div>
                 <div className="w-[20%] flex items-center justify-center">
-                  <span>{item.Gas}</span>
+                  <span>{item.gas}</span>
                 </div>
               </div>
             ))
@@ -129,7 +128,7 @@ const DataSheet = () => {
         </div>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-2">
         {totalPages > 0 && (
           <ReactPaginate
             breakLabel="..."

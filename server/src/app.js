@@ -42,8 +42,15 @@ const io = new Server(server, {
 });
 
 //--------------------SOCKET SERVICE-------------------------------------
-const { getInitialData } = require("./services/socket.service");
+const {
+  getInitialData,
+  getInitialDataControl,
+  updateDataControl,
+} = require("./services/socket.service");
+
 getInitialData(connection, client, io);
+getInitialDataControl(connection, client, io);
+updateDataControl(connection, client, io);
 
 //--------------------MQTT SERVICE-------------------------------------
 const { updateData } = require("./services/mqttClient.service");

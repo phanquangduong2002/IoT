@@ -9,13 +9,16 @@ const char* password = "987654321";
 
 // Địa chỉ IP của máy chủ MQTT
 const char* mqttServer = "broker.hivemq.com";
+// const char* mqttServer = "172.20.10.12";
 const int mqttPort = 1883;
 
 // Tên thiết bị và chủ đề MQTT
 const char* clientId = "DHT11Client";
 const char* dataTopic = "home/data"; // Topic chứa cả nhiệt độ, độ ẩm và ánh sáng
-const char* lightTopic = "home/light";
-#define LIGHT_PIN 5 // Sử dụng chân GPIO 5 (D1) để điều khiển đèn
+const char* lightTopic1 = "bulb1"; // Chủ đề cho đèn 1
+const char* lightTopic2 = "bulb2"; // Chủ đề cho đèn 2
+#define LIGHT_PIN_1 5 // Sử dụng chân GPIO 5 (D1) để điều khiển đèn 1
+#define LIGHT_PIN_2 4 // Sử dụng chân GPIO 4 (D2) để điều khiển đèn 2
 #define LIGHT_SENSOR_PIN A0 // Chân ADC để đọc dữ liệu ánh sáng
 // Thiết lập cổng DHT11
 #define DHTPIN 2
@@ -36,8 +39,12 @@ void setup() {
   setup_wifi();
   client.setServer(mqttServer, mqttPort);
   client.setCallback(callback);
-  pinMode(LIGHT_PIN, OUTPUT); // Khai báo chân GPIO điều khiển đèn làm đầu ra
-  digitalWrite(LIGHT_PIN, LOW); // Ban đầu, tắt đèn (đưa chân GPIO xuống mức thấp)
+  pinMode(LIGHT_PIN_1, OUTPUT); // Khai báo chân GPIO điều khiển đèn 1 làm đầu ra
+  digitalWrite(LIGHT_PIN_1, LOW); // Ban đầu, tắt đèn 1 (đưa chân GPIO xuống mức thấp)
+
+  pinMode(LIGHT_PIN_2, OUTPUT); // Khai báo chân GPIO điều khiển đèn 2 làm đầu ra
+  digitalWrite(LIGHT_PIN_2, LOW); // Ban đầu, tắt đèn 2 (đưa chân GPIO xuống mức thấp)
+
   dht.begin();
 }
 
@@ -63,7 +70,8 @@ void reconnect() {
     Serial.print("Attempting MQTT connection...");
     if (client.connect(clientId)) {
       Serial.println("connected");
-      client.subscribe(lightTopic);
+      client.subscribe(lightTopic1);
+      client.subscribe(lightTopic2);
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -78,13 +86,23 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print(". Message: ");
   
-  if (strcmp(topic, lightTopic) == 0) {
+  if (strcmp(topic, lightTopic1) == 0) {
     if (payload[0] == '1') {
-      Serial.println("Turn on the light");
-      digitalWrite(LIGHT_PIN, HIGH); // Bật đèn (đưa chân GPIO lên mức cao)
+      Serial.println("Turn on bulb 1");
+      digitalWrite(LIGHT_PIN_1, HIGH); // Bật đèn 1
     } else if (payload[0] == '0') {
-      Serial.println("Turn off the light");
-      digitalWrite(LIGHT_PIN, LOW); // Tắt đèn (đưa chân GPIO xuống mức thấp)
+      Serial.println("Turn off bulb 1");
+      digitalWrite(LIGHT_PIN_1, LOW); // Tắt đèn 1
+    }
+  }
+  
+  if (strcmp(topic, lightTopic2) == 0) {
+    if (payload[0] == '1') {
+      Serial.println("Turn on bulb 2");
+      digitalWrite(LIGHT_PIN_2, HIGH); // Bật đèn 2
+    } else if (payload[0] == '0') {
+      Serial.println("Turn off bulb 2");
+      digitalWrite(LIGHT_PIN_2, LOW); // Tắt đèn 2
     }
   }
 }

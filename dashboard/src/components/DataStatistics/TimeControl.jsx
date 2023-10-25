@@ -1,42 +1,142 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
 
-import { formatDate } from "../../utils/createData";
+import { convertToCustomFormat } from "../../utils/createData";
+
+import ReactPaginate from "react-paginate";
+
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+
+import axios from "axios";
 
 const TimeControl = () => {
-  const { controlData } = useSelector((state) => state.data);
+  const [data, setData] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isErr, setIsErr] = useState(false);
+
+  const handlePageClick = async ({ selected }) => {
+    const page = selected + 1;
+    try {
+      setIsLoading(true);
+      const res = await axios.post(
+        `http://localhost:8000/api/control?page=${page}`
+      );
+      setData(res.data.data);
+      setTotalPages(res.data.totalPages);
+      setInterval(() => {
+        setIsLoading(false);
+      }, 1200);
+    } catch (error) {
+      console.log(error);
+      setIsErr(true);
+      setInterval(() => {
+        setIsLoading(false);
+      }, 1200);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const page = 1;
+      try {
+        setIsLoading(true);
+        const res = await axios.post(
+          `http://localhost:8000/api/control?page=${page}`
+        );
+        console.log(res.data);
+        setData(res.data.data);
+        setTotalPages(res.data.totalPages);
+        setInterval(() => {
+          setIsLoading(false);
+        }, 1200);
+      } catch (error) {
+        console.log(error);
+        setIsErr(true);
+        setInterval(() => {
+          setIsLoading(false);
+        }, 1200);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="w-[80%] flex items-center gap-4">
-      <div className="flex-1">
-        <span>Thời gian</span>
-        <div className="flex flex-col-reverse">
-          {/* {controlData &&
-            controlData?.categories.length > 0 &&
-            controlData?.categories.map((item, index) => (
-              <div key={index}>{formatDate(item)}</div>
-            ))} */}
+    <div className="w-[90%] flex items-center flex-col justify-center">
+      <div className="w-full flex items-start gap-4">
+        <div className="w-[12%]">
+          <span>ID</span>
+        </div>
+        <div className="w-[36%]">
+          <span>Thời gian</span>
+        </div>
+        <div className="w-[24%] flex items-center justify-center">
+          <span>Đèn 1</span>
+        </div>
+        <div className="w-[24%] flex items-center justify-center">
+          <span>Đèn 2</span>
         </div>
       </div>
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <span>Đèn 1</span>
-        <div className="flex flex-col-reverse">
-          {/* {controlData &&
-            controlData?.lightOne.length > 0 &&
-            controlData?.lightOne.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))} */}
+
+      <div className="w-full">
+        <div className="w-full min-h-[54vh] flex flex-col items-start justify-start">
+          {isErr ? (
+            <div className="w-full mt-16 flex items-center justify-center">
+              Không tìm thấy dữ liệu
+            </div>
+          ) : isLoading ? (
+            <div className="w-full min-h-[54vh] flex item-center justify-center">
+              <span className="loading loading-spinner text-secondary"></span>
+            </div>
+          ) : data && data.length == 0 ? (
+            <div className="w-full mt-16 flex items-center justify-center">
+              Không tìm thấy dữ liệu
+            </div>
+          ) : (
+            data &&
+            data.length > 0 &&
+            data.map((item, index) => (
+              <div key={index} className="w-full flex gap-4 items-start">
+                <div className="w-[12%]">
+                  <span>{item.id}</span>
+                </div>
+                <div className="w-[36%]">
+                  <span>{convertToCustomFormat(item.time)}</span>
+                </div>
+                <div className="w-[24%] flex items-center justify-center">
+                  <span>{item.b1 === 1 ? "ON" : "OFF"}</span>
+                </div>
+                <div className="w-[24%] flex items-center justify-center">
+                  <span>{item.b2 === 1 ? "ON" : "OFF"}</span>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <span>Đèn 2</span>
-        <div className="flex flex-col-reverse">
-          {/* {controlData &&
-            controlData?.lightTwo.length > 0 &&
-            controlData?.lightTwo.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))} */}
-        </div>
+
+      <div className="mt-2">
+        {totalPages > 0 && (
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={
+              <span className="w-8 h-8 text-sm text-white flex items-center justify-center bg-gray rounded-md">
+                <BsChevronRight />
+              </span>
+            }
+            previousLabel={
+              <span className="w-8 h-8 text-sm text-white flex items-center justify-center bg-gray rounded-md">
+                <BsChevronLeft />
+              </span>
+            }
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={2}
+            pageCount={totalPages}
+            containerClassName="flex items-center justify-center gap-3"
+            pageClassName="block hover:bg-purple hover:text-white w-8 h-8 text-sm flex items-center justify-center rounded-md"
+            activeClassName="bg-purple text-white"
+          />
+        )}
       </div>
     </div>
   );

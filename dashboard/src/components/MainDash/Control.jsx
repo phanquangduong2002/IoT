@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { updateDataControl } from "../../redux/controlStore";
+
 import { motion } from "framer-motion";
 
 import { format } from "date-fns-tz";
@@ -14,6 +16,9 @@ import { BulbOnIcon, BulbOffIcon } from "../../assets/icons";
 import ChartContainer from "./ChartContainer";
 
 import { temp, humi, light, gas } from "../../assets";
+
+import io from "socket.io-client";
+const socket = io("http://localhost:8000");
 
 const MyCustomToastContainer = () => {
   return (
@@ -42,8 +47,7 @@ const Control = () => {
   const { temperatureData, humidityData, lightData, gasData, controlData } =
     useSelector((state) => state.data);
 
-  const [isB1On, setIsB1On] = useState(false);
-  const [isB2On, setIsB2On] = useState(false);
+  const { isB1On, isB2On } = useSelector((state) => state.control);
 
   const [id, setId] = useState(1);
 
@@ -63,14 +67,16 @@ const Control = () => {
 
   const notify = (notifyMsg, state) =>
     toast(notifyMsg, { type: state, theme: "colored" });
+
   const turnOnLamp = (e) => {
     const id = e.target.id;
-    const timeVietNam = getTime();
     if (id == 1) {
-      setIsB1On(true);
+      socket.emit("bulb1", "1");
+      dispatch(updateDataControl({ type: "1", data: true }));
     }
     if (id == 2) {
-      setIsB2On(true);
+      socket.emit("bulb2", "1");
+      dispatch(updateDataControl({ type: "2", data: true }));
     }
     notify(`Đèn ${id} đã bật`, "success");
   };
@@ -79,10 +85,12 @@ const Control = () => {
     const id = e.target.id;
     const timeVietNam = getTime();
     if (id == 1) {
-      setIsB1On(false);
+      socket.emit("bulb1", "0");
+      dispatch(updateDataControl({ type: "1", data: false }));
     }
     if (id == 2) {
-      setIsB2On(false);
+      socket.emit("bulb2", "0");
+      dispatch(updateDataControl({ type: "2", data: false }));
     }
     notify(`Đèn ${id} đã tắt`, "warning");
   };
@@ -177,10 +185,11 @@ const Control = () => {
                 id="1"
                 className="toggle toggle-warning toggle-lg"
                 onClick={handleClickLamp}
+                checked={isB1On}
               />
             </div>
 
-            <BulbOnIcon />
+            {isB1On ? <BulbOnIcon /> : <BulbOffIcon />}
           </div>
           <div className="flex items-end">
             <div className="flex flex-col items-center justify-center mr-8">
@@ -198,9 +207,10 @@ const Control = () => {
                 id="2"
                 className="toggle toggle-warning toggle-lg"
                 onClick={handleClickLamp}
+                checked={isB2On}
               />
             </div>
-            <BulbOnIcon />
+            {isB2On ? <BulbOnIcon /> : <BulbOffIcon />}
           </div>
         </div>
       </div>

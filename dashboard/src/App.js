@@ -13,6 +13,8 @@ import Error from "./pages/Error/Error";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 import { updateData } from "./redux/dataStore";
+
+import { updateDataControl } from "./redux/controlStore";
 import { da } from "date-fns/locale";
 
 const Layout = () => {
@@ -58,6 +60,17 @@ function App() {
       console.log("Connected to the server.");
     });
 
+    socket.on("control", (data) => {
+      if (data.length === 0) {
+        return;
+      } else {
+        if (data[0].B1 === 1)
+          dispatch(updateDataControl({ type: "1", data: true }));
+        if (data[0].B2 === 1)
+          dispatch(updateDataControl({ type: "2", data: true }));
+      }
+    });
+
     socket.on("full-data", (data) => {
       const temperatureData = { time: [], data: [] };
       const humidityData = { time: [], data: [] };
@@ -90,7 +103,6 @@ function App() {
       dispatch(updateData({ type: "humi", data: humidityData }));
       dispatch(updateData({ type: "temp", data: temperatureData }));
       dispatch(updateData({ type: "gas", data: gasData }));
-      dispatch(updateData({ type: "data", data: reversedData }));
     });
 
     socket.on("data", (data) => {
@@ -124,7 +136,6 @@ function App() {
       dispatch(updateData({ type: "humi", data: humidityData }));
       dispatch(updateData({ type: "temp", data: temperatureData }));
       dispatch(updateData({ type: "gas", data: gasData }));
-      dispatch(updateData({ type: "data", data: convertData }));
     });
 
     return () => {
