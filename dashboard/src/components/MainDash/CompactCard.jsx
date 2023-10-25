@@ -18,7 +18,7 @@ const CompactCard = ({ constants, data, expanded, setExpanded }) => {
 
   return (
     <motion.div
-      className="p-6 rounded-xl cursor-pointer" // p-6 text-[28px] p-8 text-[40px]
+      className="p-8 rounded-xl cursor-pointer" // p-6 text-[28px] p-8 text-[40px]
       onClick={handleModal}
       style={{
         background: color.backGround,
@@ -28,7 +28,7 @@ const CompactCard = ({ constants, data, expanded, setExpanded }) => {
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
-          <strong className="text-[28px] mb-3 text-white">
+          <strong className="text-[40px] mb-3 text-white">
             {data && data.data.length > 0 ? data.data[data.data.length - 1] : 0}
             {id == 1 ? " °C" : id == 2 ? " %" : id === 3 ? " lux" : " CO2"}
           </strong>

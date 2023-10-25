@@ -142,7 +142,7 @@ const Control = () => {
         >
           Ánh sáng
         </button>
-        <button
+        {/* <button
           onClick={() => setId(4)}
           className={`rounded-full border-[2px] border-red-500 px-[14px] py-1 cursor-pointer text-sm
         ${
@@ -154,7 +154,7 @@ const Control = () => {
         } transition-all duration-[200ms] ease-in-out`}
         >
           Khí gas
-        </button>
+        </button> */}
       </div>
       <div className="grid grid-cols-4 gap-12 items-start justify-between">
         <div className="col-span-3">
