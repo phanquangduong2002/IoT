@@ -69,7 +69,7 @@ const Profile = () => {
                   <motion.a
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    href="https://www.instagram.com/quangduongg_"
+                    href="https://www.instagram.com/2uangduong"
                     target="_blank"
                   >
                     <BsInstagram />

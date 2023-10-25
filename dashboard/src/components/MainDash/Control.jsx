@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -18,6 +18,7 @@ import ChartContainer from "./ChartContainer";
 import { temp, humi, light, gas } from "../../assets";
 
 import io from "socket.io-client";
+import { is } from "date-fns/locale";
 const socket = io("http://localhost:8000");
 
 const MyCustomToastContainer = () => {
@@ -50,6 +51,9 @@ const Control = () => {
   const { isB1On, isB2On } = useSelector((state) => state.control);
 
   const [id, setId] = useState(1);
+
+  const [isFlicker1, setIsFlicker1] = useState(false);
+  const [isFlicker2, setIsFlicker2] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -100,6 +104,39 @@ const Control = () => {
     if (checked) turnOnLamp(e);
     else turnOffLamp(e);
   };
+
+  // useEffect(() => {
+  //   let intervalId;
+
+  //   if (isB1On) {
+  //     intervalId = setInterval(() => {
+  //       setIsFlicker1((prevValue) => !prevValue);
+  //     }, 200);
+  //   } else {
+  //     clearInterval(intervalId);
+  //   }
+
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [isB1On]);
+
+  // useEffect(() => {
+  //   let intervalId;
+
+  //   if (isB2On) {
+  //     intervalId = setInterval(() => {
+  //       setIsFlicker2((prevValue) => !prevValue);
+  //     }, 200);
+  //   } else {
+  //     clearInterval(intervalId);
+  //   }
+
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [isB2On]);
+
   return (
     <div className="my-8">
       <div className="flex items-center justify-start gap-6 mb-6">
@@ -188,8 +225,8 @@ const Control = () => {
                 checked={isB1On}
               />
             </div>
-
             {isB1On ? <BulbOnIcon /> : <BulbOffIcon />}
+            {/* {isB1On && isFlicker1 ? <BulbOnIcon /> : <BulbOffIcon />} */}
           </div>
           <div className="flex items-end">
             <div className="flex flex-col items-center justify-center mr-8">
@@ -211,6 +248,7 @@ const Control = () => {
               />
             </div>
             {isB2On ? <BulbOnIcon /> : <BulbOffIcon />}
+            {/* {isB2On && isFlicker2 ? <BulbOnIcon /> : <BulbOffIcon />} */}
           </div>
         </div>
       </div>
