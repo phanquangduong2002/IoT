@@ -147,6 +147,8 @@ const updateDataControl = (connection, client, io) => {
                   "Error inserting data into database:",
                   insertError
                 );
+              } else {
+                console.log("Data inserted into database");
               }
             });
           }
