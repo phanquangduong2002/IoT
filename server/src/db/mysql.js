@@ -30,9 +30,9 @@ connection.connect((err) => {
   CREATE TABLE IF NOT EXISTS sensor_control (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Time DATETIME NOT NULL,
-    B1 BOOLEAN NOT NULL,
-    B2 BOOLEAN NOT NULL
-  );  
+    TB INT NOT NULL,
+    Status BOOLEAN NOT NULL
+  ); 
   `;
 
   connection.query(createTableData, (error) => {

@@ -47,7 +47,7 @@ const Control = () => {
   const { temperatureData, humidityData, lightData, gasData, controlData } =
     useSelector((state) => state.data);
 
-  const { isB1On, isB2On } = useSelector((state) => state.control);
+  const { isB1On, isB2On, isB3On } = useSelector((state) => state.control);
 
   const [id, setId] = useState(1);
 
@@ -81,6 +81,10 @@ const Control = () => {
       socket.emit("bulb2", "1");
       dispatch(updateDataControl({ type: "2", data: true }));
     }
+    if (id == 3) {
+      socket.emit("bulb3", "1");
+      dispatch(updateDataControl({ type: "3", data: true }));
+    }
     notify(`Đèn ${id} đã bật`, "success");
   };
 
@@ -94,6 +98,10 @@ const Control = () => {
       socket.emit("bulb2", "0");
       dispatch(updateDataControl({ type: "2", data: false }));
     }
+    if (id == 3) {
+      socket.emit("bulb3", "0");
+      dispatch(updateDataControl({ type: "3", data: false }));
+    }
     notify(`Đèn ${id} đã tắt`, "warning");
   };
 
@@ -104,36 +112,21 @@ const Control = () => {
   };
 
   // useEffect(() => {
+  //   const t = gasData.data[gasData.data.length - 1];
   //   let intervalId;
+  //   if (t >= 60) {
+  //     socket.emit("lightbulb", "1");
+  //     dispatch(updateDataControl({ type: "1", data: true }));
+  //     dispatch(updateDataControl({ type: "2", data: true }));
+  //     dispatch(updateDataControl({ type: "3", data: true }));
 
-  //   if (isB1On) {
-  //     intervalId = setInterval(() => {
-  //       setIsFlicker1((prevValue) => !prevValue);
-  //     }, 200);
-  //   } else {
-  //     clearInterval(intervalId);
+  //     setTimeout(() => {
+  //       dispatch(updateDataControl({ type: "1", data: false }));
+  //       dispatch(updateDataControl({ type: "2", data: false }));
+  //       dispatch(updateDataControl({ type: "3", data: false }));
+  //     }, 1200);
   //   }
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [isB1On]);
-
-  // useEffect(() => {
-  //   let intervalId;
-
-  //   if (isB2On) {
-  //     intervalId = setInterval(() => {
-  //       setIsFlicker2((prevValue) => !prevValue);
-  //     }, 200);
-  //   } else {
-  //     clearInterval(intervalId);
-  //   }
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [isB2On]);
+  // }, [gasData]);
 
   return (
     <div className="my-8">
@@ -177,7 +170,7 @@ const Control = () => {
         >
           Ánh sáng
         </button>
-        {/* <button
+        <button
           onClick={() => setId(4)}
           className={`rounded-full border-[2px] border-red-500 px-[14px] py-1 cursor-pointer text-sm
         ${
@@ -189,23 +182,25 @@ const Control = () => {
         } transition-all duration-[200ms] ease-in-out`}
         >
           Khí gas
-        </button> */}
+        </button>
       </div>
-      <div className="grid grid-cols-4 gap-12 items-start justify-between">
-        <div className="col-span-3">
-          {id && id === 1 ? (
-            <ChartContainer constants={temp} data={temperatureData} />
-          ) : id === 2 ? (
-            <ChartContainer constants={humi} data={humidityData} />
-          ) : id === 3 ? (
-            <ChartContainer constants={light} data={lightData} />
-          ) : (
-            <ChartContainer constants={gas} data={gasData} />
-          )}
+      <div className="grid grid-cols-4 gap-16 items-start justify-between">
+        <div className="col-span-3 flex items-start justify-start gap-3">
+          <div className="flex-1">
+            {id && id === 1 ? (
+              <ChartContainer constants={temp} data={temperatureData} />
+            ) : id === 2 ? (
+              <ChartContainer constants={humi} data={humidityData} />
+            ) : id === 3 ? (
+              <ChartContainer constants={light} data={lightData} />
+            ) : (
+              <ChartContainer constants={gas} data={gasData} />
+            )}
+          </div>
         </div>
-        <div className="pt-5 col-span-1 flex flex-col items-center justify-center gap-14">
+        <div className="pt-5 col-span-1 flex flex-col items-end justify-end gap-12 mr-6">
           <div className="flex items-center">
-            <div className="flex flex-col items-center justify-center mr-8">
+            <div className="flex flex-col items-center justify-center mr-6">
               <span
                 className={`mb-2 uppercase text-xl font-semibold tracking-wider ${
                   isDarkMode
@@ -224,10 +219,9 @@ const Control = () => {
               />
             </div>
             {isB1On ? <BulbOnIcon /> : <BulbOffIcon />}
-            {/* {isB1On && isFlicker1 ? <BulbOnIcon /> : <BulbOffIcon />} */}
           </div>
           <div className="flex items-end">
-            <div className="flex flex-col items-center justify-center mr-8">
+            <div className="flex flex-col items-center justify-center mr-6">
               <span
                 className={`mb-2 uppercase text-xl font-semibold tracking-wider ${
                   isDarkMode
@@ -246,8 +240,28 @@ const Control = () => {
               />
             </div>
             {isB2On ? <BulbOnIcon /> : <BulbOffIcon />}
-            {/* {isB2On && isFlicker2 ? <BulbOnIcon /> : <BulbOffIcon />} */}
           </div>
+          {/* <div className="flex items-end">
+            <div className="flex flex-col items-center justify-center mr-3">
+              <span
+                className={`mb-2 uppercase text-xl font-semibold tracking-wider ${
+                  isDarkMode
+                    ? "text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.7)]"
+                    : "text-black drop-shadow-[0_1.2px_1.2px_rgba(256,256,256,0.7)]`"
+                }`}
+              >
+                Đèn 3
+              </span>
+              <input
+                type="checkbox"
+                id="3"
+                className="toggle toggle-warning toggle-lg"
+                onChange={handleClickLamp}
+                checked={isB3On}
+              />
+            </div>
+            {isB3On ? <BulbOnIcon /> : <BulbOffIcon />}
+          </div> */}
         </div>
       </div>
       <MyCustomToastContainer />

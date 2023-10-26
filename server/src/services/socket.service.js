@@ -53,107 +53,101 @@ const updateDataControl = (connection, client, io) => {
     socket.on("bulb1", function (data) {
       client.publish("bulb1", data);
 
-      // Lấy phần tử mới nhất từ cơ sở dữ liệu
-      connection.query(
-        "SELECT * FROM sensor_control ORDER BY Time DESC LIMIT 1",
-        (error, results) => {
-          if (error) {
-            console.error("Error querying database:", error);
-          } else {
-            let B2 = 0; // Giá trị mặc định cho B2
+      const currentTime = new Date();
+      const month = currentTime.getMonth() + 1;
+      const Date_and_Time =
+        currentTime.getFullYear() +
+        "-" +
+        month +
+        "-" +
+        currentTime.getDate() +
+        " " +
+        currentTime.getHours() +
+        ":" +
+        currentTime.getMinutes() +
+        ":" +
+        currentTime.getSeconds();
 
-            if (results.length > 0) {
-              const latestData = results[0];
-              // Lấy dữ liệu mới nhất (B2)
-              B2 = latestData.B2;
-            }
+      // Tiến hành chèn dữ liệu mới vào cơ sở dữ liệu
+      const insertQuery =
+        "INSERT INTO sensor_control (Time, TB, Status) VALUES (?, ?, ?)";
+      const values = [Date_and_Time, 1, data];
 
-            const currentTime = new Date();
-            const month = currentTime.getMonth() + 1;
-            const Date_and_Time =
-              currentTime.getFullYear() +
-              "-" +
-              month +
-              "-" +
-              currentTime.getDate() +
-              " " +
-              currentTime.getHours() +
-              ":" +
-              currentTime.getMinutes() +
-              ":" +
-              currentTime.getSeconds();
-
-            // Tiến hành chèn dữ liệu mới vào cơ sở dữ liệu
-            const insertQuery =
-              "INSERT INTO sensor_control (Time, B1, B2) VALUES (?, ?, ?)";
-            const values = [Date_and_Time, data, B2];
-
-            connection.query(insertQuery, values, (insertError) => {
-              if (insertError) {
-                console.error(
-                  "Error inserting data into database:",
-                  insertError
-                );
-              } else {
-                console.log("Data inserted into database");
-              }
-            });
-          }
+      connection.query(insertQuery, values, (insertError) => {
+        if (insertError) {
+          console.error("Error inserting data into database:", insertError);
+        } else {
+          console.log("Data inserted into database");
         }
-      );
+      });
     });
 
     socket.on("bulb2", function (data) {
       client.publish("bulb2", data);
 
-      // Lấy phần tử mới nhất từ cơ sở dữ liệu (A)
-      connection.query(
-        "SELECT * FROM sensor_control ORDER BY Time DESC LIMIT 1",
-        (error, results) => {
-          if (error) {
-            console.error("Error querying database:", error);
-          } else {
-            let B1 = 0; // Giá trị mặc định cho B2
+      const currentTime = new Date();
+      const month = currentTime.getMonth() + 1;
+      const Date_and_Time =
+        currentTime.getFullYear() +
+        "-" +
+        month +
+        "-" +
+        currentTime.getDate() +
+        " " +
+        currentTime.getHours() +
+        ":" +
+        currentTime.getMinutes() +
+        ":" +
+        currentTime.getSeconds();
 
-            if (results.length > 0) {
-              const latestData = results[0];
-              // Lấy dữ liệu mới nhất (B2)
-              B1 = latestData.B1;
-            }
+      // Tiến hành chèn dữ liệu mới vào cơ sở dữ liệu
+      const insertQuery =
+        "INSERT INTO sensor_control (Time, TB, Status) VALUES (?, ?, ?)";
+      const values = [Date_and_Time, 2, data];
 
-            const currentTime = new Date();
-            const month = currentTime.getMonth() + 1;
-            const Date_and_Time =
-              currentTime.getFullYear() +
-              "-" +
-              month +
-              "-" +
-              currentTime.getDate() +
-              " " +
-              currentTime.getHours() +
-              ":" +
-              currentTime.getMinutes() +
-              ":" +
-              currentTime.getSeconds();
-
-            // Tiến hành chèn dữ liệu mới vào cơ sở dữ liệu
-            const insertQuery =
-              "INSERT INTO sensor_control (Time, B1, B2) VALUES (?, ?, ?)";
-            const values = [Date_and_Time, B1, data];
-
-            connection.query(insertQuery, values, (insertError) => {
-              if (insertError) {
-                console.error(
-                  "Error inserting data into database:",
-                  insertError
-                );
-              } else {
-                console.log("Data inserted into database");
-              }
-            });
-          }
+      connection.query(insertQuery, values, (insertError) => {
+        if (insertError) {
+          console.error("Error inserting data into database:", insertError);
+        } else {
+          console.log("Data inserted into database");
         }
-      );
+      });
+    });
+
+    socket.on("bulb3", function (data) {
+      client.publish("bulb3", data);
+
+      const currentTime = new Date();
+      const month = currentTime.getMonth() + 1;
+      const Date_and_Time =
+        currentTime.getFullYear() +
+        "-" +
+        month +
+        "-" +
+        currentTime.getDate() +
+        " " +
+        currentTime.getHours() +
+        ":" +
+        currentTime.getMinutes() +
+        ":" +
+        currentTime.getSeconds();
+
+      // Tiến hành chèn dữ liệu mới vào cơ sở dữ liệu
+      const insertQuery =
+        "INSERT INTO sensor_control (Time, TB, Status) VALUES (?, ?, ?)";
+      const values = [Date_and_Time, 3, data];
+
+      connection.query(insertQuery, values, (insertError) => {
+        if (insertError) {
+          console.error("Error inserting data into database:", insertError);
+        } else {
+          console.log("Data inserted into database");
+        }
+      });
+    });
+
+    socket.on("lightbulb", function (data) {
+      client.publish("lightbulb", data);
     });
   });
 };

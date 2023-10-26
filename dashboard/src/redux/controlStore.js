@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isB1On: false,
   isB2On: false,
+  isB3On: false,
 };
 
 export const controlStore = createSlice({
@@ -21,6 +22,11 @@ export const controlStore = createSlice({
           return {
             ...state,
             isB2On: data,
+          };
+        case "3":
+          return {
+            ...state,
+            isB3On: data,
           };
       }
     },

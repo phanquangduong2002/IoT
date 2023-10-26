@@ -107,8 +107,8 @@ const findAllDataControl = async (req, res) => {
             fullData.push({
               id: value.ID,
               time: vietnamTime,
-              b1: value.B1,
-              b2: value.B2,
+              tb: value.TB,
+              status: value.Status,
             });
           });
           res.json({

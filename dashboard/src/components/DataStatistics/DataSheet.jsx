@@ -110,9 +110,9 @@ const DataSheet = () => {
         <div className="w-[20%] flex items-center justify-center">
           <span>Ánh sáng</span>
         </div>
-        {/* <div className="w-[20%] flex items-center justify-center">
+        <div className="w-[20%] flex items-center justify-center">
           <span>Khí gas</span>
-        </div> */}
+        </div>
       </div>
 
       <div className="w-full">
@@ -149,9 +149,9 @@ const DataSheet = () => {
                 <div className="w-[20%] flex items-center justify-center">
                   <span>{item.light}</span>
                 </div>
-                {/* <div className="w-[20%] flex items-center justify-center">
+                <div className="w-[20%] flex items-center justify-center">
                   <span>{item.gas}</span>
-                </div> */}
+                </div>
               </div>
             ))
           )}

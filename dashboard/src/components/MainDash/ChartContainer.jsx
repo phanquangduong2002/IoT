@@ -65,7 +65,10 @@ const ChartContainer = ({ constants, data }) => {
       <motion.div
         className="rounded-xl cursor-pointer text-black p-6"
         style={{
-          background: color.backGround,
+          background:
+            id === 4
+              ? "linear-gradient(rgb(189 173 163) -146.42%, rgb(192 183 169) -46.42%)"
+              : color.backGround,
           boxShadow: color.boxShadow,
         }}
       >

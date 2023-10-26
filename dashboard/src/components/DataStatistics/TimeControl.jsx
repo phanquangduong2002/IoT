@@ -95,18 +95,18 @@ const TimeControl = () => {
           Tìm kiếm
         </button>
       </div>
-      <div className="w-full flex items-start gap-4">
+      <div className="w-full flex items-start gap-8">
         <div className="w-[12%]">
           <span>ID</span>
         </div>
-        <div className="w-[36%]">
+        <div className="w-[30%]">
           <span>Thời gian</span>
         </div>
         <div className="w-[24%] flex items-center justify-center">
-          <span>Đèn 1</span>
+          <span>Thiết bị</span>
         </div>
         <div className="w-[24%] flex items-center justify-center">
-          <span>Đèn 2</span>
+          <span>Trạng thái</span>
         </div>
       </div>
 
@@ -128,18 +128,20 @@ const TimeControl = () => {
             data &&
             data.length > 0 &&
             data.map((item, index) => (
-              <div key={index} className="w-full flex gap-4 items-start">
+              <div key={index} className="w-full flex gap-8 items-start">
                 <div className="w-[12%]">
                   <span>{item.id}</span>
                 </div>
-                <div className="w-[36%]">
+                <div className="w-[30%]">
                   <span>{convertToCustomFormat(item.time)}</span>
                 </div>
                 <div className="w-[24%] flex items-center justify-center">
-                  <span>{item.b1 === 1 ? "ON" : "OFF"}</span>
+                  <span>
+                    {item.tb === 1 ? "LED1" : item.tb === 2 ? "LED2" : "LED3"}
+                  </span>
                 </div>
                 <div className="w-[24%] flex items-center justify-center">
-                  <span>{item.b2 === 1 ? "ON" : "OFF"}</span>
+                  <span>{item.status === 1 ? "Bật" : "Tắt"}</span>
                 </div>
               </div>
             ))

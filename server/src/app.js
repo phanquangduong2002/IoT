@@ -49,7 +49,7 @@ const {
 } = require("./services/socket.service");
 
 getInitialData(connection, client, io);
-getInitialDataControl(connection, client, io);
+// getInitialDataControl(connection, client, io);
 updateDataControl(connection, client, io);
 
 //--------------------MQTT SERVICE-------------------------------------

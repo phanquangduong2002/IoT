@@ -1,8 +1,13 @@
+import { useEffect } from "react";
+
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { useEffect } from "react";
+import { updateData } from "./redux/dataStore";
+
+import { updateDataControl } from "./redux/controlStore";
+
 import io from "socket.io-client";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -11,12 +16,6 @@ import Analytics from "./pages/Analytics/Analytics";
 import Error from "./pages/Error/Error";
 
 import Sidebar from "./components/Sidebar/Sidebar";
-
-import { updateData } from "./redux/dataStore";
-
-import { updateDataControl } from "./redux/controlStore";
-import { da } from "date-fns/locale";
-
 const Layout = () => {
   return (
     <>
@@ -60,16 +59,16 @@ function App() {
       console.log("Connected to the server.");
     });
 
-    socket.on("control", (data) => {
-      if (data.length === 0) {
-        return;
-      } else {
-        if (data[0].B1 === 1)
-          dispatch(updateDataControl({ type: "1", data: true }));
-        if (data[0].B2 === 1)
-          dispatch(updateDataControl({ type: "2", data: true }));
-      }
-    });
+    // socket.on("control", (data) => {
+    //   if (data.length === 0) {
+    //     return;
+    //   } else {
+    //     if (data[0].B1 === 1)
+    //       dispatch(updateDataControl({ type: "1", data: true }));
+    //     if (data[0].B2 === 1)
+    //       dispatch(updateDataControl({ type: "2", data: true }));
+    //   }
+    // });
 
     socket.on("full-data", (data) => {
       const temperatureData = { time: [], data: [] };
@@ -112,12 +111,12 @@ function App() {
       const lightData = { time: [], data: [] };
       const gasData = { time: [], data: [] };
 
-      convertData.forEach((item) => {
-        const time = item.time;
-        const temperature = item.temp;
-        const humidity = item.humi;
-        const light = item.light;
-        const gas = item.gas;
+      convertData.forEach((t) => {
+        const time = t.time;
+        const temperature = t.temp;
+        const humidity = t.humi;
+        const light = t.light;
+        const gas = t.gas;
 
         temperatureData.time.push(time);
         temperatureData.data.push(temperature);
