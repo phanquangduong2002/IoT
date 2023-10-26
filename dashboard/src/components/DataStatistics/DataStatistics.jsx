@@ -8,28 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import DataSheet from "./DataSheet";
 import TimeControl from "./TimeControl";
 
-const MyCustomToastContainer = () => {
-  return (
-    <ToastContainer
-      position="top-right"
-      autoClose={2000}
-      newestOnTop={false}
-      icon={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      style={{
-        fontSize: "15px",
-        borderRadius: "16px",
-        padding: "16px",
-        width: "260px",
-      }}
-    />
-  );
-};
-
 const DataStatistics = () => {
   const { isDarkMode } = useSelector((state) => state.theme);
 
@@ -70,8 +48,6 @@ const DataStatistics = () => {
       <div className="flex items-start justify-start gap-6">
         {id === 1 ? <DataSheet /> : <TimeControl />}
       </div>
-
-      <MyCustomToastContainer />
     </div>
   );
 };

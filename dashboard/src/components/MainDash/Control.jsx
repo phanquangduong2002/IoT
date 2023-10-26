@@ -18,7 +18,6 @@ import ChartContainer from "./ChartContainer";
 import { temp, humi, light, gas } from "../../assets";
 
 import io from "socket.io-client";
-import { is } from "date-fns/locale";
 const socket = io("http://localhost:8000");
 
 const MyCustomToastContainer = () => {
@@ -87,7 +86,6 @@ const Control = () => {
 
   const turnOffLamp = (e) => {
     const id = e.target.id;
-    const timeVietNam = getTime();
     if (id == 1) {
       socket.emit("bulb1", "0");
       dispatch(updateDataControl({ type: "1", data: false }));

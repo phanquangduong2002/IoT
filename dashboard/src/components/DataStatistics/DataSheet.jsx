@@ -159,7 +159,9 @@ const DataSheet = () => {
       </div>
 
       <div className="mt-2">
-        {totalPages > 0 && (
+        {isLoading ? (
+          <></>
+        ) : totalPages > 0 ? (
           <ReactPaginate
             breakLabel="..."
             nextLabel={
@@ -180,6 +182,8 @@ const DataSheet = () => {
             activeClassName="bg-purple text-white"
             forcePage={selectedPage}
           />
+        ) : (
+          <></>
         )}
       </div>
     </div>

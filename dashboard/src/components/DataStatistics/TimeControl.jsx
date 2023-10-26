@@ -148,7 +148,9 @@ const TimeControl = () => {
       </div>
 
       <div className="mt-2">
-        {totalPages > 0 && (
+        {isLoading ? (
+          <></>
+        ) : totalPages > 0 ? (
           <ReactPaginate
             breakLabel="..."
             nextLabel={
@@ -169,6 +171,8 @@ const TimeControl = () => {
             activeClassName="bg-purple text-white"
             forcePage={selectedPage}
           />
+        ) : (
+          <></>
         )}
       </div>
     </div>
