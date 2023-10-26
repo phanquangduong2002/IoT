@@ -221,7 +221,7 @@ const Control = () => {
                 type="checkbox"
                 id="1"
                 className="toggle toggle-warning toggle-lg"
-                onClick={handleClickLamp}
+                onChange={handleClickLamp}
                 checked={isB1On}
               />
             </div>
@@ -243,7 +243,7 @@ const Control = () => {
                 type="checkbox"
                 id="2"
                 className="toggle toggle-warning toggle-lg"
-                onClick={handleClickLamp}
+                onChange={handleClickLamp}
                 checked={isB2On}
               />
             </div>

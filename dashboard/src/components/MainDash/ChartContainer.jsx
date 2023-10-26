@@ -48,14 +48,14 @@ const ChartContainer = ({ constants, data }) => {
       },
       xaxis: {
         type: "datetime",
-        categories: data.time.slice(-15),
+        categories: data.time.slice(-20),
       },
     },
     series: [
       {
         name: title,
-        data: data.data.slice(-15),
-        categories: data.time.slice(-15),
+        data: data.data.slice(-20),
+        categories: data.time.slice(-20),
       },
     ],
   };

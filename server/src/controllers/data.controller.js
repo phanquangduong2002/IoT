@@ -7,14 +7,26 @@ const findAllData = async (req, res) => {
   const itemsPerPage = 13;
   const page = req.query.page || 1;
   const offset = (page - 1) * itemsPerPage;
+  const date = req.query.date;
 
-  const query = `SELECT * FROM sensor_data ORDER BY Time DESC LIMIT ${itemsPerPage} OFFSET ${offset}`;
+  let query = "SELECT * FROM sensor_data";
+  if (date !== undefined) {
+    const formatDate = date.split("-").reverse().join("-");
+    query += ` WHERE DATE(Time) = '${formatDate}'`;
+  }
+
+  query += ` ORDER BY Time DESC LIMIT ${itemsPerPage} OFFSET ${offset}`;
+
   connection.query(query, (err, results) => {
     if (err) {
       console.error("Error querying database:", err);
       res.status(500).json({ error: "Internal server error" });
     } else {
-      const countQuery = "SELECT COUNT(*) AS total FROM sensor_data";
+      let countQuery = "SELECT COUNT(*) AS total FROM sensor_data";
+      if (date !== undefined) {
+        const formatDate = date.split("-").reverse().join("-");
+        countQuery += ` WHERE DATE(Time) = '${formatDate}'`;
+      }
       connection.query(countQuery, (err, countResult) => {
         if (err) {
           console.error("Error querying count:", err);
@@ -56,14 +68,25 @@ const findAllDataControl = async (req, res) => {
   const itemsPerPage = 13;
   const page = req.query.page || 1;
   const offset = (page - 1) * itemsPerPage;
+  const date = req.query.date;
 
-  const query = `SELECT * FROM sensor_control ORDER BY Time DESC LIMIT ${itemsPerPage} OFFSET ${offset}`;
+  let query = "SELECT * FROM sensor_control";
+  if (date !== undefined) {
+    const formatDate = date.split("-").reverse().join("-");
+    query += ` WHERE DATE(Time) = '${formatDate}'`;
+  }
+
+  query += ` ORDER BY Time DESC LIMIT ${itemsPerPage} OFFSET ${offset}`;
   connection.query(query, (err, results) => {
     if (err) {
       console.error("Error querying database:", err);
       res.status(500).json({ error: "Internal server error" });
     } else {
-      const countQuery = "SELECT COUNT(*) AS total FROM sensor_control";
+      let countQuery = "SELECT COUNT(*) AS total FROM sensor_control";
+      if (date !== undefined) {
+        const formatDate = date.split("-").reverse().join("-");
+        countQuery += ` WHERE DATE(Time) = '${formatDate}'`;
+      }
       connection.query(countQuery, (err, countResult) => {
         if (err) {
           console.error("Error querying count:", err);

@@ -3,7 +3,7 @@ const { format } = require("date-fns");
 
 const getInitialData = (connection, client, io) => {
   io.on("connection", (socket) => {
-    const sql = "SELECT * FROM sensor_data ORDER BY Time DESC LIMIT 13";
+    const sql = "SELECT * FROM sensor_data ORDER BY Time DESC LIMIT 20";
     connection.query(sql, function (err, result) {
       if (err) throw err;
       var fullData = [];

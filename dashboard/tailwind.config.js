@@ -11,7 +11,11 @@ module.exports = {
         "dark-mode":
           "radial-gradient( circle farthest-corner at 83.7% 4.3%,  rgba(173,0,171,1) 0%, rgba(15,51,92,1) 90% )",
         purple: "linear-gradient(180deg, #BB67FF 0%, #C484F3 100%)",
+        "purple-btn": "linear-gradient(180deg, #9c3beb 0%, #ab60e1 100%)",
         gray: "linear-gradient(180deg, #bfbdc1 0%, #b5b2b7 100%)",
+      },
+      text: {
+        purple: "linear-gradient(180deg, #BB67FF 0%, #C484F3 100%)",
       },
       colors: {
         yellow: "linear-gradient(180deg, #F8D49A -146.42%, #FAD79D -46.42%)",
